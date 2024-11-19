@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Windows98;component/Themes/Windows98Window.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Windows98;component/Themes/Windows98Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Windows98;component/Themes/Windows98CheckBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Windows98;component/Themes/Windows98ListBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Windows98;component/Themes/Windows98ScrollBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Windows98;component/Themes/Windows98Animations.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Windows98;component/Themes/Windows98TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Windows98;component/Themes/Windows98Label.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

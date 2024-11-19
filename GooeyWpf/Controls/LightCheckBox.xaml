@@ -1,0 +1,98 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="LightCheckBoxStyle" TargetType="CheckBox">
+        <Setter Property="FontFamily" Value="Microsoft Sans Serif" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="Aliased" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <StackPanel Orientation="Horizontal">
+                        <Grid 
+                          Name="PART_MainGrid">
+                            <!--<Border BorderBrush="#808080"
+                                BorderThickness="1,1,0,0" 
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch" />
+                            <Border BorderBrush="White"
+                                BorderThickness="0,0,1,1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch" />
+
+                            <Border BorderBrush="Black"
+                                BorderThickness="1,1,0,0"
+                                Margin="1,1,2,2"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch" />
+
+                            <Border BorderBrush="#DFDFDF"
+                                BorderThickness="0,0,1,1"
+                                Margin="1,1,1,1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch" />-->
+
+                            <Image Width="16"
+                               Height="16"
+                               Source="/Images/LightOff.png" 
+                               x:Name="PART_CheckMark" 
+                               RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                        </Grid>
+
+                        <Border BorderThickness="1" x:Name="PART_FocusStroke"
+                            Margin="4,0,0,0">
+                            <Border.BorderBrush>
+                                <DrawingBrush Viewport="0,0,2,2" ViewportUnits="Absolute" TileMode="Tile">
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing Brush="Black">
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <RectangleGeometry Rect="0,0,50,50" />
+                                                        <RectangleGeometry Rect="50,50,50,50" />
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Border.BorderBrush>
+
+                            <TextBlock Text="{TemplateBinding Content}" Foreground="Black" Name="PART_MainText" />
+                        </Border>
+                    </StackPanel>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <!--<Setter TargetName="PART_CheckMark" Property="Visibility" Value="Visible" />-->
+                            <Setter TargetName="PART_CheckMark" Property="Source" Value="/Images/LightOn.png" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_MainGrid" Property="Background" Value="#C0C0C0" />
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" Value="False">
+                            <Setter TargetName="PART_FocusStroke" Property="BorderBrush" Value="Transparent" />
+                        </Trigger>
+
+                        <!--<Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_MainGrid" Property="Background" Value="#C0C0C0" />
+                            <Setter TargetName="PART_MainText" Property="Foreground" Value="#808080" />
+                            <Setter TargetName="PART_MainText" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="0"
+                                                   Color="White"
+                                                   Direction="-45"
+                                                   ShadowDepth="1.4" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_CheckMark" Property="Source" Value="/Images/CheckMarkDisabled.png" />
+                        </Trigger>-->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="GooeyWpf.Controls.Avatar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GooeyWpf.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="64" d:DesignWidth="64">
+    <Border BorderBrush="#FFFFFF" BorderThickness="0,0,1,1">
+        <Grid>
+            <Border BorderBrush="#808080" BorderThickness="1,1,0,0" />
+            <Border BorderBrush="#000000" BorderThickness="1,1,0,0" Margin="1,1,0,0" />
+            <Border BorderBrush="#DFDFDF" BorderThickness="0,0,1,1" Margin="1,1,0,0" />
+            <Image Margin="2,2,1,1"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor" Source="{Binding FaceImage, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Avatar}}}" />
+            <Image Margin="2,2,1,1"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor" Source="{Binding EyeImage, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Avatar}}}"
+                   Visibility="{Binding EyeImageVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Avatar}}}" />
+        </Grid>
+    </Border>
+</UserControl>

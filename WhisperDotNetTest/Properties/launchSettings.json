@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WhisperDotNetTest": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\jacob\\Desktop\\ggml-medium.bin\""
+    }
+  }
+}

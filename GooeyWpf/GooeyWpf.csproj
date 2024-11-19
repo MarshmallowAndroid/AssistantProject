@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Avatar2\EyeBlink.png" />
+    <None Remove="Images\Avatar2\EyeOpen.png" />
+    <None Remove="Images\Avatar2\FrownClosed.png" />
+    <None Remove="Images\Avatar2\FrownOpen.png" />
+    <None Remove="Images\Avatar2\Misc1.png" />
+    <None Remove="Images\Avatar2\NormalClosed.png" />
+    <None Remove="Images\Avatar2\NormalOpen.png" />
+    <None Remove="Images\Avatar2\Sleep1.png" />
+    <None Remove="Images\Avatar2\Sleep2.png" />
+    <None Remove="Images\Avatar\EyeBlink.png" />
+    <None Remove="Images\Avatar\EyeOpen.png" />
+    <None Remove="Images\Avatar\FrownClosed.png" />
+    <None Remove="Images\Avatar\FrownOpen.png" />
+    <None Remove="Images\Avatar\HalClosed.png" />
+    <None Remove="Images\Avatar\HalOpen.png" />
+    <None Remove="Images\Avatar\NormalClosed.png" />
+    <None Remove="Images\Avatar\NormalOpen.png" />
+    <None Remove="Images\Icon.png" />
+    <None Remove="Images\LightOff.png" />
+    <None Remove="Images\LightOn.png" />
+    <None Remove="Sounds\Boot.wav" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+    <PackageReference Include="TagLibSharp" Version="2.3.0" />
+    <PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.0.4" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" Version="4.0.4" />
+    <PackageReference Include="Whisper.net" Version="1.7.2" />
+    <PackageReference Include="Whisper.net.Runtime" Version="1.7.2" />
+    <PackageReference Include="Whisper.net.Runtime.Cuda.Windows" Version="1.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Windows98\Windows98.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Avatar2\EyeBlink.png" />
+    <Resource Include="Images\Avatar2\EyeOpen.png" />
+    <Resource Include="Images\Avatar2\FrownClosed.png" />
+    <Resource Include="Images\Avatar2\FrownOpen.png" />
+    <Resource Include="Images\Avatar2\Misc1.png" />
+    <Resource Include="Images\Avatar2\NormalClosed.png" />
+    <Resource Include="Images\Avatar2\NormalOpen.png" />
+    <Resource Include="Images\Avatar2\Sleep1.png" />
+    <Resource Include="Images\Avatar2\Sleep2.png" />
+    <Resource Include="Images\Avatar\EyeOpen.png" />
+    <Resource Include="Images\Avatar\EyeBlink.png" />
+    <Resource Include="Images\Avatar\FrownClosed.png" />
+    <Resource Include="Images\Avatar\FrownOpen.png" />
+    <Resource Include="Images\Avatar\HalClosed.png" />
+    <Resource Include="Images\Avatar\HalOpen.png" />
+    <Resource Include="Images\Avatar\NormalOpen.png" />
+    <Resource Include="Images\Avatar\NormalClosed.png" />
+    <Resource Include="Images\Icon.png" />
+    <Resource Include="Images\LightOff.png" />
+    <Resource Include="Images\LightOn.png" />
+	<Resource Include="Sounds\Boot.wav" />
+  </ItemGroup>
+
+</Project>

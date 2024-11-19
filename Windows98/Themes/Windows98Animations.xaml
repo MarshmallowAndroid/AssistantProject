@@ -1,0 +1,106 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="DrumsAnimation" TargetType="Image">
+        <Setter Property="Source" Value="..\Images\Drums\1.png" />
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Image.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames
+                            Storyboard.TargetProperty="Source"
+                            Duration="0:0:1"
+                            RepeatBehavior="Forever">
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\Drums\1.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\Drums\2.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\Drums\3.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\Drums\4.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ComputerSearchAnimation" TargetType="Image">
+        <Setter Property="Source" Value="..\Images\ComputerSearch\1.png" />
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+        <Setter Property="Width" Value="48" />
+        <Setter Property="Height" Value="45" />
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Image.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames
+                        Storyboard.TargetProperty="Source"
+                        Duration="0:0:1"
+                        RepeatBehavior="Forever">
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\ComputerSearch\1.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\ComputerSearch\2.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\ComputerSearch\3.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\ComputerSearch\4.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\ComputerSearch\5.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\ComputerSearch\6.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\ComputerSearch\7.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <BitmapImage UriSource="..\Images\ComputerSearch\8.png" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="Paced">
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
