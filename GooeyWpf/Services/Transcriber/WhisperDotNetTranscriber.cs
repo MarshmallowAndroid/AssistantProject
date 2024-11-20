@@ -93,7 +93,7 @@ namespace GooeyWpf.Services.Transcriber
 
                 // get the first two seconds of audio
                 voiceDetectionAudio = audioManager.Get(audioDetectionLengthMs);
-                if (VoiceActivityDetected(voiceDetectionAudio, 16000, 1000, 0.5f, 0.0f))
+                if (VoiceActivityDetected(voiceDetectionAudio, 16000, audioDetectionLengthMs / 2, 0.5f, 0.0f))
                 {
                     audio = audioManager.Get(audioLengthMs);
                     VoiceActivity?.Invoke(this, EventArgs.Empty);
