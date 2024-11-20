@@ -41,7 +41,8 @@ namespace GooeyWpf
                 MessageBox.Show("Piper or whisper.cpp GGML models not found.\n" +
                     "Please copy them to their specific directories in the " +
                     "executable's path.", "Missing required files", MessageBoxButton.OK, MessageBoxImage.Error);
-                Application.Current.Shutdown();
+                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
+                return;
             }
 
             synthesizer = new PiperSynthesizer(
