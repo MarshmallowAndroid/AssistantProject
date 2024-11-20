@@ -27,23 +27,8 @@ namespace GooeyWpf
 
         public Assistant()
         {
-            Directory.CreateDirectory("Piper");
-            Directory.CreateDirectory("PiperVoice");
-            Directory.CreateDirectory("WhisperCppModel");
-
             string[] piperVoices = Directory.GetFiles("PiperVoice", "*.onnx");
             string[] whisperCppModels = Directory.GetFiles("WhisperCppModel", "*.bin");
-
-            if (Directory.GetFiles("Piper").Length < 1
-                || piperVoices.Length < 1
-                || Directory.GetFiles("WhisperCppModel").Length < 1)
-            {
-                MessageBox.Show("Piper or whisper.cpp GGML models not found.\n" +
-                    "Please copy them to their specific directories in the " +
-                    "executable's path.", "Missing required files", MessageBoxButton.OK, MessageBoxImage.Error);
-                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
-                return;
-            }
 
             synthesizer = new PiperSynthesizer(
                 @"Piper\piper.exe",
