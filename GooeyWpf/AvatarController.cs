@@ -54,19 +54,6 @@ namespace GooeyWpf
             Storyboard.SetTargetProperty(objectAnimation2, new PropertyPath(Avatar.EyeImageProperty));
             blink2.Children.Add(objectAnimation2);
 
-            //RotateTransform rotateTransform = new RotateTransform();
-            //avatarControl.RegisterName("Avatar_RotateTransform", avatarControl);
-            //DoubleAnimationUsingKeyFrames doubleAnimation = new()
-            //{
-            //    Duration = TimeSpan.FromSeconds(1)
-            //};
-            //doubleAnimation.KeyFrames.Add(new EasingDoubleKeyFrame(0));
-            //doubleAnimation.KeyFrames.Add(new EasingDoubleKeyFrame(90));
-            //Storyboard.SetTargetName(doubleAnimation, "Avatar_RotateTransform");
-            //Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(RotateTransform.AngleProperty));
-            //avatarControl.RenderTransform = rotateTransform;
-            //barrelRoll.Children.Add(doubleAnimation);
-
             blinkTimer = new(BlinkTimerCallback, avatarControl, RandomBlinkInterval(), Timeout.Infinite);
 
             expressionTimer = new(ExpressionTimerCallback, null, Timeout.Infinite, Timeout.Infinite);
@@ -134,7 +121,6 @@ namespace GooeyWpf
             avatarControl.Dispatcher.Invoke(() =>
             {
                 ResetExpression();
-                avatarControl.EyeImageVisibility = Visibility.Visible;
             });
         }
 
