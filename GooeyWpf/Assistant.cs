@@ -1,6 +1,6 @@
 ﻿using GooeyWpf.Commands;
-using GooeyWpf.Services.Synthesizer;
-using GooeyWpf.Services.Transcriber;
+using GooeyWpf.Synthesizer;
+using GooeyWpf.Transcriber;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using System.IO;
@@ -14,13 +14,14 @@ namespace GooeyWpf
     {
         public const string AssistantName = "Britney";
         public static readonly string[] WakeWordVariations =
-        {
-            "Hey Britney", "Hey Brittany", "Hey Brittney", "Hey Britany", "Hey Britny", "Hey Brit Knee"
-        };
+        [
+            "Hey Britney", "Hey Brittany", "Hey Brittney", "Hey Britany", "Hey Britny", "Hey Brit Knee",
+            "Britney", "Brittany", "Brittney", "Britany", "Brit Knee"
+        ];
 
         private readonly WasapiOut outputDevice = new();
         private readonly ISynthesizer synthesizer;
-        private readonly ITranscriber transcriber;
+        private readonly WhisperDotNetTranscriber transcriber;
         private readonly CommandManager commandManager;
 
         private DirectCommand? directCommand;
@@ -50,8 +51,8 @@ namespace GooeyWpf
             commandManager = new(transcriber, "hey " + AssistantName, WakeWordVariations);
             commandManager.Wake += CommandManager_Wake;
 
-            ((WhisperDotNetTranscriber)transcriber).VoiceActivity += Assistant_VoiceActivity;
-            ((WhisperDotNetTranscriber)transcriber).VoiceActivityDone += Assistant_VoiceActivityDone;
+            transcriber.VoiceActivity += Assistant_VoiceActivity;
+            transcriber.VoiceActivityDone += Assistant_VoiceActivityDone;
         }
 
         private void Assistant_VoiceActivityDone(object? sender, EventArgs e)
@@ -102,6 +103,11 @@ namespace GooeyWpf
 
             commandManager.RegisterCommand(new KillCommand(transcriber, synthesizer, chatLog, avatarController, commandManager));
             commandManager.RegisterCommands(commands);
+        }
+
+        public void ManualInput(string text)
+        {
+            transcriber.ManualInput(text);
         }
 
         public void Dispose()

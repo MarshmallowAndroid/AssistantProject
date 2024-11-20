@@ -1,4 +1,4 @@
-﻿namespace GooeyWpf.Services.Transcriber
+﻿namespace GooeyWpf.Transcriber
 {
     public interface ITranscriber : IDisposable
     {

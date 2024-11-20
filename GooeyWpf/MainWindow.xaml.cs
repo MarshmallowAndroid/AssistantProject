@@ -1,5 +1,5 @@
 ﻿using GooeyWpf.Services;
-using GooeyWpf.Services.Transcriber;
+using GooeyWpf.Transcriber;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -125,7 +125,7 @@ namespace GooeyWpf
         {
             if (string.IsNullOrEmpty(textBoxChat.Text)) return;
 
-            Assistant.Instance.CommandManager.ManualInput(textBoxChat.Text);
+            Assistant.Instance.ManualInput(textBoxChat.Text);
             textBoxChat.Text = "";
         }
 

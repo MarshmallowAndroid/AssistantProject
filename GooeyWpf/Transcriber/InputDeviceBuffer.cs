@@ -1,6 +1,6 @@
 ﻿using NAudio.Wave;
 
-namespace GooeyWpf.Services.Transcriber
+namespace GooeyWpf.Transcriber
 {
     internal class InputDeviceBuffer
     {

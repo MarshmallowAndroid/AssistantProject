@@ -1,19 +1,14 @@
-﻿using GooeyWpf.Services.Transcriber;
+﻿using GooeyWpf.Transcriber;
 
 namespace GooeyWpf.Commands
 {
-    public abstract class Command
+    public abstract class Command(ITranscriber transcriber)
     {
         private readonly Stack<EventHandler<ITranscriber.TranscribeEventArgs>> enterEventStack = new();
         private readonly Stack<EventHandler<ITranscriber.TranscribeEventArgs>> exitEventStack = new();
-        private EventHandler<ITranscriber.TranscribeEventArgs> lastEvent;
+        private EventHandler<ITranscriber.TranscribeEventArgs>? lastEvent;
         private EventHandler<ITranscriber.TranscribeEventArgs>? originalTranscribeEvent;
-        protected readonly ITranscriber transcriber;
-
-        public Command(ITranscriber transcriber)
-        {
-            this.transcriber = transcriber;
-        }
+        protected readonly ITranscriber transcriber = transcriber;
 
         public EventHandler<ITranscriber.TranscribeEventArgs>? OriginalTranscribeEvent
         {
@@ -43,7 +38,8 @@ namespace GooeyWpf.Commands
             transcriber.Transcribe -= lastEvent;
             transcriber.Transcribe += transcribeEvent;
 
-            enterEventStack.Push(lastEvent);
+            if (lastEvent is not null)
+                enterEventStack.Push(lastEvent);
             exitEventStack.Push(transcribeEvent);
 
             lastEvent = transcribeEvent;

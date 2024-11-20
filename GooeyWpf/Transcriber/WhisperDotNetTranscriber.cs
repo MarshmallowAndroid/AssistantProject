@@ -2,13 +2,14 @@
 using System.Diagnostics;
 using Whisper.net;
 using Whisper.net.LibraryLoader;
+using Whisper.net.Logger;
 
-namespace GooeyWpf.Services.Transcriber
+namespace GooeyWpf.Transcriber
 {
     public class WhisperDotNetTranscriber : ITranscriber
     {
         private const int audioDetectionLengthMs = 2000;
-        private const int audioLengthMs = 10000;
+        private const int audioLengthMs = 6000;
 
         private readonly string model;
 
@@ -43,8 +44,14 @@ namespace GooeyWpf.Services.Transcriber
 
         public void Initialize()
         {
-            RuntimeOptions.Instance.SetLoadedLibrary(RuntimeLibrary.Cuda);
-            RuntimeOptions.Instance.SetUseFlashAttention(true);
+            //RuntimeOptions.Instance.SetUseFlashAttention(true);
+
+            LogProvider.Instance.OnLog += (l, s) =>
+            {
+                Debug.WriteLine($"[{l}] {s}");
+            };
+
+            RuntimeOptions.Instance.SetRuntimeLibraryOrder([RuntimeLibrary.Cuda]);
 
             WhisperFactory whisper = WhisperFactory.FromPath(model);
             processor = whisper.CreateBuilder()
@@ -121,6 +128,12 @@ namespace GooeyWpf.Services.Transcriber
         {
             Transcribe?.Invoke(this,
                 new ITranscriber.TranscribeEventArgs(e.Text.Trim(), e.Probability, e.Language));
+        }
+
+        public void ManualInput(string input)
+        {
+            Transcribe?.Invoke(this,
+                new ITranscriber.TranscribeEventArgs(input, 1.0f, "en"));
         }
 
         public void StopTranscribing()

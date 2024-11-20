@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace GooeyWpf.Services.Synthesizer
+namespace GooeyWpf.Synthesizer
 {
     public class PiperSynthesizer : ISynthesizer
     {

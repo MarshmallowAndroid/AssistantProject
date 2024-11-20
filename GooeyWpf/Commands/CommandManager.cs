@@ -1,4 +1,4 @@
-﻿using GooeyWpf.Services.Transcriber;
+﻿using GooeyWpf.Transcriber;
 
 namespace GooeyWpf.Commands
 {
@@ -46,13 +46,6 @@ namespace GooeyWpf.Commands
                 command.OriginalTranscribeEvent -= Transcriber_Transcribe;
                 commands.Remove(command);
             }
-        }
-
-        public void ManualInput(string command)
-        {
-            listening = true;
-            wakeResponded = true;
-            Transcriber_Transcribe(null, new ITranscriber.TranscribeEventArgs(command, 1.0f, "en"));
         }
 
         public void Stop()

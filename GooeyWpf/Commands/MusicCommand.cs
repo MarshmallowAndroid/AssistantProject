@@ -1,6 +1,6 @@
 ﻿using GooeyWpf.Services;
-using GooeyWpf.Services.Synthesizer;
-using GooeyWpf.Services.Transcriber;
+using GooeyWpf.Synthesizer;
+using GooeyWpf.Transcriber;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using TagLib.Ape;
@@ -8,12 +8,8 @@ using TagLib.Ape;
 namespace GooeyWpf.Commands
 {
     [Command]
-    internal class MusicCommand : InteractiveCommand
+    internal class MusicCommand(ITranscriber transcriber, ISynthesizer synthesizer, ListBox chatLog, AvatarController avatarController) : InteractiveCommand(transcriber, synthesizer, chatLog, avatarController)
     {
-        public MusicCommand(ITranscriber transcriber, ISynthesizer synthesizer, ListBox chatLog, AvatarController avatarController) : base(transcriber, synthesizer, chatLog, avatarController)
-        {
-        }
-
         public override bool CommandMatch(string text)
         {
             return text.StartsWith("play ") || text.StartsWith("stop ") ||
@@ -82,7 +78,6 @@ namespace GooeyWpf.Commands
             }
             else
             {
-
                 IEnumerable<MusicService.Music> matches = MusicService.Instance.Library.Where(music => Common.Similarity(music.Title.ToLower(), remaining) > 0.5f);
 
                 if (matches.Any())

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace GooeyWpf.Services.Synthesizer
+namespace GooeyWpf.Synthesizer
 {
     public interface ISynthesizer
     {

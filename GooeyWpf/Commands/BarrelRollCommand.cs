@@ -1,5 +1,5 @@
-﻿using GooeyWpf.Services.Synthesizer;
-using GooeyWpf.Services.Transcriber;
+﻿using GooeyWpf.Synthesizer;
+using GooeyWpf.Transcriber;
 using System;
 using System.Collections.Generic;
 using System.Linq;
