@@ -8,7 +8,7 @@ namespace GooeyWpf.Services
         private const string CacheName = "MusicCache.dat";
 
         private static readonly string MusicFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-        private static string MusicPath = Path.Combine(MusicFolder, "fixed music");
+        private static string MusicPath = Path.Combine(MusicFolder);
 
         private WasapiOut? wasapiOut;
 
@@ -42,9 +42,9 @@ namespace GooeyWpf.Services
                 TagLib.File taglibFile = TagLib.File.Create(file);
 
                 cacheWriter.Write(file);
-                cacheWriter.Write(taglibFile.Tag.Title);
-                cacheWriter.Write(taglibFile.Tag.FirstPerformer ?? taglibFile.Tag.FirstAlbumArtist);
-                cacheWriter.Write(taglibFile.Tag.Album);
+                cacheWriter.Write(taglibFile.Tag.Title ?? Path.GetFileNameWithoutExtension(file));
+                cacheWriter.Write(taglibFile.Tag.FirstPerformer ?? taglibFile.Tag.FirstAlbumArtist ?? "");
+                cacheWriter.Write(taglibFile.Tag.Album ?? "");
             }
         }
 
