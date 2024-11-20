@@ -25,6 +25,7 @@ namespace GooeyWpf
 
         private readonly Timer blinkTimer;
         private readonly Timer expressionTimer;
+        private readonly Timer imageTimer;
 
         private Expression currentExpression;
 
@@ -66,12 +67,12 @@ namespace GooeyWpf
             //avatarControl.RenderTransform = rotateTransform;
             //barrelRoll.Children.Add(doubleAnimation);
 
-
-
             blinkTimer = new(BlinkTimerCallback, avatarControl, RandomBlinkInterval(), Timeout.Infinite);
 
             expressionTimer = new(ExpressionTimerCallback, null, Timeout.Infinite, Timeout.Infinite);
             currentExpression = Expression.Normal;
+
+            imageTimer = new(ImageTimer_Callback, null, Timeout.Infinite, Timeout.Infinite);
 
             assistant.LipSync += LipSync;
         }
@@ -91,7 +92,7 @@ namespace GooeyWpf
             });
         }
 
-        public void ChangeExpression(Expression expression)
+        public void ChangeExpression(Expression expression, int duration = 5000)
         {
             currentExpression = expression;
             avatarControl.Dispatcher.Invoke(() =>
@@ -113,7 +114,28 @@ namespace GooeyWpf
                 blink1.Completed += changeAction;
                 avatarControl.BeginStoryboard(blink1);
             });
-            expressionTimer.Change(5000, Timeout.Infinite);
+            expressionTimer.Change(duration, Timeout.Infinite);
+        }
+
+        public void DisplayImage(string path, int duration = 5000)
+        {
+            assistant.LipSync -= LipSync;
+            avatarControl.Dispatcher.Invoke(() =>
+            {
+                avatarControl.EyeImageVisibility = Visibility.Hidden;
+                avatarControl.FaceImage = new BitmapImage(Common.Resource($"/Images/{path}"));
+            });
+            imageTimer.Change(duration, Timeout.Infinite);
+        }
+
+        private void ImageTimer_Callback(object? state)
+        {
+            assistant.LipSync += LipSync;
+            avatarControl.Dispatcher.Invoke(() =>
+            {
+                ResetExpression();
+                avatarControl.EyeImageVisibility = Visibility.Visible;
+            });
         }
 
         private void LipSync(bool mouthOpen)

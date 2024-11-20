@@ -20,7 +20,7 @@ namespace GooeyWpf.Commands
             });
         }
 
-        protected void Respond(string text)
+        protected void Respond(string text, int delayMs = 0, Action<Task>? postAction = null)
         {
             chatLog.Dispatcher.Invoke(() =>
             {
@@ -28,9 +28,14 @@ namespace GooeyWpf.Commands
                 MainWindow.ScrollToEnd(chatLog);
             });
             synthesizer.Synthesize(text);
+
+            if (postAction is not null)
+            {
+                Task.Delay(delayMs).ContinueWith(postAction);
+            }
         }
 
-        protected void Respond(string displayText, string spokenText)
+        protected void Respond(string displayText, string spokenText, int delayMs = 0, Action<Task>? postAction = null)
         {
             chatLog.Dispatcher.Invoke(() =>
             {
@@ -38,19 +43,23 @@ namespace GooeyWpf.Commands
                 MainWindow.ScrollToEnd(chatLog);
             });
             synthesizer.Synthesize(spokenText);
+
+            if (postAction is not null)
+            {
+                Task.Delay(delayMs).ContinueWith(postAction);
+            }
         }
 
-        protected void Respond(string[] texts)
+        protected void Respond(string[] texts, int delayMs = 0, Action<Task>? postAction = null)
         {
             int textIndex = RandomService.Instance.Next(0, texts.Length);
-            Respond(texts[textIndex]);
+            Respond(texts[textIndex], delayMs, postAction);
         }
 
-        protected void Respond(string[] displayTexts, string[] spokenTexts)
+        protected void Respond(string[] displayTexts, string[] spokenTexts, int delayMs = 0, Action<Task>? postAction = null)
         {
-            int displayTextIndex = RandomService.Instance.Next(0, displayTexts.Length);
-            int spokenTextIndex = RandomService.Instance.Next(0, spokenTexts.Length);
-            Respond(displayTexts[displayTextIndex], spokenTexts[spokenTextIndex]);
+            int textIndex = RandomService.Instance.Next(0, displayTexts.Length);
+            Respond(displayTexts[textIndex], spokenTexts[textIndex], delayMs, postAction);
         }
 
         protected void ChangeExpression(Expression expression)
