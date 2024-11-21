@@ -13,7 +13,8 @@ Open the solution, then build **GooeyWpf**.
 
 ## Running
 
-
+This project makes use of the NVIDIA CUDA Toolkit for acceleration. Download it [here](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64) for your version of Windows.
+Otherwise, CPU fallback will be used which not ideal.
 
 ### Whisper dependencies
 Download a model of your choice [here](https://huggingface.co/ggerganov/whisper.cpp/tree/main).
