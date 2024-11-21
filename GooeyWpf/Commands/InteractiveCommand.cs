@@ -14,10 +14,10 @@ namespace GooeyWpf.Commands
 
         protected override void OnCommandTranscribe(object? sender, ITranscriber.TranscribeEventArgs eventArgs)
         {
-            chatLog.Dispatcher.Invoke(() =>
-            {
-                chatLog.Items.Add(new ChatLog(ChatLog.ChatSpeaker.User, eventArgs.Text));
-            });
+            //chatLog.Dispatcher.Invoke(() =>
+            //{
+            //    chatLog.Items.Add(new ChatLog(ChatLog.ChatSpeaker.User, eventArgs.Text));
+            //});
         }
 
         protected void Respond(string text, int delayMs = 0, Action<Task>? postAction = null)

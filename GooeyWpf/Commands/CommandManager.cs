@@ -5,6 +5,7 @@ namespace GooeyWpf.Commands
     public class CommandManager
     {
         private readonly List<Command> commands = new();
+        private readonly List<Command> smalltalkCommands = new();
         private readonly ITranscriber transcriber;
         private readonly string wakeCommand;
         private readonly string[] variations;
@@ -31,11 +32,25 @@ namespace GooeyWpf.Commands
             commands.Add(command);
         }
 
+        public void RegisterSmalltalkCommand(Command smalltalkCommand)
+        {
+            smalltalkCommand.OriginalTranscribeEvent = Transcriber_Transcribe;
+            smalltalkCommands.Add(smalltalkCommand);
+        }
+
         public void RegisterCommands(IEnumerable<Command> commands)
         {
             foreach (var command in commands)
             {
                 RegisterCommand(command);
+            }
+        }
+
+        public void RegisterSmalltalkCommands(IEnumerable<Command> smalltalkCommands)
+        {
+            foreach (var command in smalltalkCommands)
+            {
+                RegisterSmalltalkCommand(command);
             }
         }
 
@@ -45,6 +60,12 @@ namespace GooeyWpf.Commands
             {
                 command.OriginalTranscribeEvent -= Transcriber_Transcribe;
                 commands.Remove(command);
+            }
+
+            foreach (var smalltalkCommand in smalltalkCommands)
+            {
+                smalltalkCommand.OriginalTranscribeEvent -= Transcriber_Transcribe;
+                smalltalkCommands.Remove(smalltalkCommand);
             }
         }
 
@@ -84,7 +105,8 @@ namespace GooeyWpf.Commands
                     string textDumb = Common.RemovePunctuation(text);
                     if (textDumb.Contains(variation, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        remaining = textDumb.Replace(variation.ToLower(), "").Trim();
+                        string lowerVariation = variation.ToLower();
+                        remaining = textDumb[textDumb.IndexOf(lowerVariation)..].Replace(variation.ToLower(), "").Trim();
                         listening = true;
                         break;
                     }
@@ -105,16 +127,25 @@ namespace GooeyWpf.Commands
                     remaining = text;
                 }
 
-                foreach (var command in commands)
+                ProcessCommand(remaining, commands);
+            }
+            else
+            {
+                ProcessCommand(text, smalltalkCommands);
+            }
+        }
+
+        private void ProcessCommand(string commandString, IEnumerable<Command> commands)
+        {
+            foreach (var command in commands)
+            {
+                if (command.CommandMatch(commandString))
                 {
-                    if (command.CommandMatch(remaining))
-                    {
-                        command.Parse(remaining);
-                        listening = false;
-                        wakeResponded = false;
-                        Sleep?.Invoke(this, EventArgs.Empty);
-                        break;
-                    }
+                    command.Parse(commandString);
+                    listening = false;
+                    wakeResponded = false;
+                    Sleep?.Invoke(this, EventArgs.Empty);
+                    break;
                 }
             }
         }

@@ -10,4 +10,9 @@ namespace GooeyWpf.Commands
     internal class CommandAttribute : Attribute
     {
     }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    internal class SmallTalkCommandAttribute : Attribute
+    {
+    }
 }

@@ -1,4 +1,5 @@
-﻿using NAudio.CoreAudioApi;
+﻿using LibVLCSharp.Shared;
+using NAudio.CoreAudioApi;
 using NAudio.Utils;
 using NAudio.Wave;
 using System.Diagnostics;
@@ -18,6 +19,18 @@ namespace Transcriber
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
+
+            using (var libVLC = new LibVLC())
+            {
+                var media = new Media(libVLC, "https://www.youtube.com/watch?v=dQw4w9WgXcQ", FromType.FromLocation);
+                //await media.Parse(MediaParseOptions.ParseNetwork);
+                using (var mp = new MediaPlayer(media.SubItems.First()))
+                {
+                    var r = mp.Play();
+                    Console.ReadKey();
+                }
+            }
+
 
             Console.WriteLine("Initializing Whisper...");
             transcriber = new WhisperDotNetTranscriber(args[0]);

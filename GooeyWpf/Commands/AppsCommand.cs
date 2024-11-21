@@ -14,18 +14,11 @@ namespace GooeyWpf.Commands
 
         public override bool CommandMatch(string text)
         {
-            return text.StartsWith("open ") || text.StartsWith("launch ");
+            return (text.StartsWith("open ") || text.StartsWith("launch ")) && !text.Contains("bay doors");
         }
 
         public override void Parse(string text)
         {
-            if (Common.RemovePunctuation(text).ToLower().Contains("open the pod bay doors"))
-            {
-                ChangeExpression(Expression.Hal);
-                Respond("I'm sorry, Dave. I'm afraid I can't do that.");
-                return;
-            }
-
             string appName = Common.RemovePunctuation(text[text.IndexOf(' ')..].Trim()).ToLower();
 
             IEnumerable<AppsService.App> matches = AppsService.Instance.Apps.Where(app => Common.Similarity(app.Name.ToLower(), appName) > 0.5f);

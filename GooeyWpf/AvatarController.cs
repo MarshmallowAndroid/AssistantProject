@@ -1,5 +1,6 @@
 ﻿using GooeyWpf.Controls;
 using GooeyWpf.Services;
+using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -109,10 +110,28 @@ namespace GooeyWpf
             assistant.LipSync -= LipSync;
             avatarControl.Dispatcher.Invoke(() =>
             {
-                avatarControl.EyeImageVisibility = Visibility.Hidden;
-                avatarControl.FaceImage = new BitmapImage(Common.Resource($"/Images/{path}"));
+                avatarControl.ImageVisibility = Visibility.Visible;
+                avatarControl.Image = new BitmapImage(Common.Resource($"/Images/{path}"));
             });
             imageTimer.Change(duration, Timeout.Infinite);
+        }
+
+        public void DisplayVideo(LibVLCSharp.Shared.Media media)
+        {
+            LibVLCSharp.Shared.MediaPlayer mediaPlayer = VlcService.Instance.GetMediaPlayer();
+            mediaPlayer.Media = media;
+
+            avatarControl.Dispatcher.Invoke(() =>
+            {
+                avatarControl.VideoVisibility = Visibility.Visible;
+                avatarControl.VideoMediaPlayer = mediaPlayer;
+                avatarControl.VideoMediaPlayer.Play();
+                avatarControl.VideoMediaPlayer.Stopped += (s, e) =>
+                {
+                    avatarControl.VideoMediaPlayer.Media.Dispose();
+                    avatarControl.VideoMediaPlayer.Media = null;
+                };
+            });
         }
 
         private void ImageTimer_Callback(object? state)
@@ -120,7 +139,7 @@ namespace GooeyWpf
             assistant.LipSync += LipSync;
             avatarControl.Dispatcher.Invoke(() =>
             {
-                ResetExpression();
+                avatarControl.ImageVisibility = Visibility.Hidden;
             });
         }
 

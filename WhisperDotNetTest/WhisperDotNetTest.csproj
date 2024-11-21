@@ -8,9 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LibVLCSharp" Version="3.9.1" />
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
     <PackageReference Include="OpusSharp" Version="1.0.4" />
+    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.21" />
     <PackageReference Include="Whisper.net" Version="1.7.2" />
     <PackageReference Include="Whisper.net.Runtime" Version="1.7.2" />
     <PackageReference Include="Whisper.net.Runtime.Cuda.Windows" Version="1.7.2" />

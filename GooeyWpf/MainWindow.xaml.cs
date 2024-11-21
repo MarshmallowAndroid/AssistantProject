@@ -23,7 +23,7 @@ namespace GooeyWpf
 
             avatarController = new(avatar, Assistant.Instance);
 
-            Assistant.Instance.CommandManager.Transcribe += CommandManager_Transcribe;
+            Assistant.Instance.CommandManager.Transcribe += Transcriber_Transcribe;
             Assistant.Instance.CommandManager.Wake += CommandManager_Wake;
             Assistant.Instance.CommandManager.Sleep += CommandManager_Sleep;
 
@@ -99,7 +99,7 @@ namespace GooeyWpf
             }
         }
 
-        private void CommandManager_Transcribe(object? sender, ITranscriber.TranscribeEventArgs eventArgs)
+        private void Transcriber_Transcribe(object? sender, ITranscriber.TranscribeEventArgs eventArgs)
         {
             Dispatcher.Invoke(() =>
             {

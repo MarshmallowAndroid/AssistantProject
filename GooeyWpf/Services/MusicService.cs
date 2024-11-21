@@ -10,8 +10,6 @@ namespace GooeyWpf.Services
         private static readonly string MusicFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
         private static string MusicPath = Path.Combine(MusicFolder);
 
-        private WasapiOut? wasapiOut;
-
         public MusicService()
         {
             if (!File.Exists(CacheName))
@@ -31,6 +29,7 @@ namespace GooeyWpf.Services
             List<string> files = [];
             files.AddRange(Directory.GetFiles(MusicPath, "*.mp3", SearchOption.AllDirectories));
             files.AddRange(Directory.GetFiles(MusicPath, "*.flac", SearchOption.AllDirectories));
+            files.AddRange(Directory.GetFiles(MusicPath, "*.wav", SearchOption.AllDirectories));
 
             if (File.Exists(CacheName)) File.Delete(CacheName);
 
@@ -83,39 +82,20 @@ namespace GooeyWpf.Services
 
         public void Play(Music music)
         {
-            if (wasapiOut?.PlaybackState == PlaybackState.Playing)
-            {
-                wasapiOut?.Stop();
-                wasapiOut?.Dispose();
-            }
-
             MediaFoundationReader mediaFoundationReader = new(music.Path);
-
-            wasapiOut = new();
-            wasapiOut.Init(mediaFoundationReader);
-            wasapiOut.Play();
+            AudioService.Instance.Initialize(mediaFoundationReader);
+            AudioService.Instance.Play();
         }
 
         public void Play(Stream waveStream)
         {
-            if (wasapiOut?.PlaybackState == PlaybackState.Playing)
-            {
-                wasapiOut?.Stop();
-                wasapiOut?.Dispose();
-            }
-
-            wasapiOut = new();
-            wasapiOut.Init(new WaveFileReader(waveStream));
-            wasapiOut.Play();
+            AudioService.Instance.Initialize(new WaveFileReader(waveStream));
+            AudioService.Instance.Play();
         }
 
         public void Stop()
         {
-            if (wasapiOut?.PlaybackState == PlaybackState.Playing)
-            {
-                wasapiOut?.Stop();
-                wasapiOut?.Dispose();
-            }
+            AudioService.Instance.Stop();
         }
 
         public struct Music(string path, string title, string artist, string album)

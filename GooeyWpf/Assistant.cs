@@ -89,6 +89,8 @@ namespace GooeyWpf
 
         public CommandManager CommandManager => commandManager;
 
+        public ITranscriber Transcriber => transcriber;
+
         public void BindCommands(ListBox chatLog, AvatarController avatarController)
         {
             directCommand = new DirectCommand(transcriber, synthesizer, chatLog, avatarController);
@@ -103,6 +105,16 @@ namespace GooeyWpf
 
             commandManager.RegisterCommand(new KillCommand(transcriber, synthesizer, chatLog, avatarController, commandManager));
             commandManager.RegisterCommands(commands);
+
+            IEnumerable<TypeInfo> smalltalkTypes = Assembly.GetExecutingAssembly().DefinedTypes
+                .Where(t => t.CustomAttributes.Any(t => t.AttributeType == typeof(SmallTalkCommandAttribute)));
+
+            IEnumerable<Command> smalltalkCommands = smalltalkTypes.Select(ct =>
+            {
+                return (Command)Activator.CreateInstance(ct, [transcriber, synthesizer, chatLog, avatarController])!;
+            });
+
+            commandManager.RegisterSmalltalkCommands(smalltalkCommands);
         }
 
         public void ManualInput(string text)

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using LibVLCSharp.Shared;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,6 +65,46 @@ namespace GooeyWpf.Controls
         {
             get => (Visibility)GetValue(EyeImageVisibilityProperty);
             set => SetValue(EyeImageVisibilityProperty, value);
+        }
+
+        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
+            "Image", typeof(ImageSource), typeof(Avatar),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public ImageSource Image
+        {
+            get => (ImageSource)GetValue(ImageProperty);
+            set => SetValue(ImageProperty, value);
+        }
+
+        public static readonly DependencyProperty ImageVisibilityProperty = DependencyProperty.Register(
+            "ImageVisibility", typeof(Visibility), typeof(Avatar),
+            new FrameworkPropertyMetadata(Visibility.Hidden, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Visibility ImageVisibility
+        {
+            get => (Visibility)GetValue(ImageVisibilityProperty);
+            set => SetValue(ImageVisibilityProperty, value);
+        }
+
+        public static readonly DependencyProperty VideoVisibilityProperty = DependencyProperty.Register(
+            "VideoVisibility", typeof(Visibility), typeof(Avatar),
+            new FrameworkPropertyMetadata(Visibility.Hidden, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Visibility VideoVisibility
+        {
+            get => (Visibility)GetValue(VideoVisibilityProperty);
+            set => SetValue(VideoVisibilityProperty, value);
+        }
+
+        public static readonly DependencyProperty VideoMediaPlayerProperty = DependencyProperty.Register(
+            "VideoMediaPlayer", typeof(LibVLCSharp.Shared.MediaPlayer), typeof(Avatar),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public LibVLCSharp.Shared.MediaPlayer VideoMediaPlayer
+        {
+            get => (LibVLCSharp.Shared.MediaPlayer)GetValue(VideoMediaPlayerProperty);
+            set => SetValue(VideoMediaPlayerProperty, value);
         }
     }
 }

@@ -26,13 +26,13 @@
     <None Remove="Images\Avatar\HalOpen.png" />
     <None Remove="Images\Avatar\NormalClosed.png" />
     <None Remove="Images\Avatar\NormalOpen.png" />
-    <None Remove="Images\iAcademy\BennettTanyag.png" />
-    <None Remove="Images\iAcademy\CrisolaTan.jpg" />
-    <None Remove="Images\iAcademy\FranciscoNapalit.png" />
-    <None Remove="Images\iAcademy\JohnPadua.png" />
-    <None Remove="Images\iAcademy\JonCuyson.png" />
-    <None Remove="Images\iAcademy\RaquelPerezWong.png" />
-    <None Remove="Images\iAcademy\VanessaTanco.jpg" />
+    <None Remove="Images\iACADEMY\BennettTanyag.png" />
+    <None Remove="Images\iACADEMY\CrisolaTan.jpg" />
+    <None Remove="Images\iACADEMY\FranciscoNapalit.png" />
+    <None Remove="Images\iACADEMY\JohnPadua.png" />
+    <None Remove="Images\iACADEMY\JonCuyson.png" />
+    <None Remove="Images\iACADEMY\RaquelPerezWong.png" />
+    <None Remove="Images\iACADEMY\VanessaTanco.jpg" />
     <None Remove="Images\Icon.png" />
     <None Remove="Images\LightOff.png" />
     <None Remove="Images\LightOn.png" />
@@ -40,14 +40,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LibVLCSharp.WPF" Version="3.9.1" />
     <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
     <PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.0.4" />
     <PackageReference Include="Vanara.PInvoke.Shell32" Version="4.0.4" />
+    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.21" />
     <PackageReference Include="Whisper.net" Version="1.7.2" />
     <PackageReference Include="Whisper.net.Runtime" Version="1.7.2" />
     <PackageReference Include="Whisper.net.Runtime.Cuda.Windows" Version="1.7.2" />
     <PackageReference Include="Whisper.net.Runtime.Vulkan" Version="1.7.2" />
+    <PackageReference Include="YoutubeExplode" Version="6.4.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,13 +75,13 @@
     <Resource Include="Images\Avatar\HalOpen.png" />
     <Resource Include="Images\Avatar\NormalOpen.png" />
     <Resource Include="Images\Avatar\NormalClosed.png" />
-    <Resource Include="Images\iAcademy\BennettTanyag.png" />
-    <Resource Include="Images\iAcademy\CrisolaTan.jpg" />
-    <Resource Include="Images\iAcademy\FranciscoNapalit.png" />
-    <Resource Include="Images\iAcademy\JohnPadua.png" />
-    <Resource Include="Images\iAcademy\JonCuyson.png" />
-    <Resource Include="Images\iAcademy\RaquelPerezWong.png" />
-    <Resource Include="Images\iAcademy\VanessaTanco.jpg" />
+    <Resource Include="Images\iACADEMY\BennettTanyag.png" />
+    <Resource Include="Images\iACADEMY\CrisolaTan.jpg" />
+    <Resource Include="Images\iACADEMY\FranciscoNapalit.png" />
+    <Resource Include="Images\iACADEMY\JohnPadua.png" />
+    <Resource Include="Images\iACADEMY\JonCuyson.png" />
+    <Resource Include="Images\iACADEMY\RaquelPerezWong.png" />
+    <Resource Include="Images\iACADEMY\VanessaTanco.jpg" />
     <Resource Include="Images\Icon.png" />
     <Resource Include="Images\LightOff.png" />
     <Resource Include="Images\LightOn.png" />

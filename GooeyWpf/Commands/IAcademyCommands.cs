@@ -26,12 +26,16 @@ namespace GooeyWpf.Commands
 
         public override void Parse(string text)
         {
-            Respond("Sure! Ask away.");
+            Respond([
+                "Sure!",
+                "Sure, I'll try to answer as best as I can."]);
             Enter(QuestionsHandler);
         }
 
         void QuestionsHandler(object? sender, ITranscriber.TranscribeEventArgs e)
         {
+            base.OnCommandTranscribe(sender, e);
+
             string text = Common.RemovePunctuation(e.Text).ToLower();
 
             Debug.WriteLine(text);
@@ -45,50 +49,69 @@ namespace GooeyWpf.Commands
                 string? occupationPhonetic = null;
 
                 if (text.Contains("president of iacademy") ||
-                    text.Contains("ceo of iacademy"))
+                    text.Contains("ceo of iacademy") ||
+                    text.Contains("miss vanessa"))
                 {
                     person = "Ms. Vanessa Tanco";
                     personPhonetic = "Miss Vanessa Tanco";
-                    occupation = "current President and CEO, or chief executive officer, of iAcademy";
+                    occupation = "current President and CEO, or chief executive officer, of iACADEMY";
+                    avatarController.DisplayImage("iACADEMY/VanessaTanco.png");
                 }
-                else if (text.Contains("coo of iacademy"))
+                else if (text.Contains("coo of iacademy")
+                    || text.Contains("miss raquel"))
                 {
                     person = "Ms. Raquel Wong";
                     personPhonetic = "Miss Raquel Wong";
-                    occupation = "COO of iAcademy.";
+                    occupation = "COO of iACADEMY.";
+                    avatarController.DisplayImage("iACADEMY/RaquelPerezWong.png");
                 }
                 else if (text.Contains("dean of soc") ||
-                    text.Contains("dean of the school of computing"))
+                    text.Contains("dean of the school of computing") ||
+                    text.Contains("sir francisco"))
                 {
                     person = "Sir Francisco Napalit";
                     personPhonetic = "Sir Francisco Nahpahlit";
                     occupation = "Dean of SOC or School of Computing.";
-                    avatarController.DisplayImage("iAcademy/FranciscoNapalit.png");
+                    avatarController.DisplayImage("iACADEMY/FranciscoNapalit.png");
                 }
                 else if (text.Contains("dean of sbla") ||
-                    text.Contains("dean of the school of business and liberal arts"))
+                    text.Contains("dean of the school of business and liberal arts") ||
+                    (text.Contains("sir john") || text.Contains("padua")))
                 {
                     person = "Sir John Padua";
                     occupation = "Dean of SBLA or School of Business and Liberal Arts.";
+                    avatarController.DisplayImage("iACADEMY/JohnPadua.png");
                 }
                 else if (text.Contains("dean of soda") ||
-                    text.Contains("dean of the school of design and the arts"))
+                    text.Contains("dean of the school of design and the arts") ||
+                    text.Contains("sir jon"))
                 {
                     person = "Sir Jon Cuyson";
                     occupation = "Dean of SODA or School of Design and the Arts.";
+                    avatarController.DisplayImage("iACADEMY/JonCuyson.png");
                 }
-                else if (text.Contains("chairperson of it"))
+                else if (text.Contains("chairperson of it") ||
+                    text.Contains("sir bennett"))
                 {
                     person = "Sir Bennett Tanyag";
                     occupation = "Chairperson of the Information Technology Department";
-                    avatarController.DisplayImage("iAcademy/BennettTanyag.png");
+                    avatarController.DisplayImage("iACADEMY/BennettTanyag.png");
                 }
-                else if (text.Contains("chairperson of game dev"))
+                else if (text.Contains("chairperson of game dev") || text.Contains("chairperson of game development") ||
+                    text.Contains("sir carl"))
                 {
                     person = "Sir Carl Louie So";
                     occupation = "Chairperson of the Game Development Department";
+                    // no image :(
                 }
-
+                else if (text.Contains("chairperson of cs") || text.Contains("chairperson of computer science") ||
+                    text.Contains("miss crisola"))
+                {
+                    person = "Ms. Crisola Tan";
+                    personPhonetic = "Miss Crisola Tan";
+                    occupation = "Chairperson of the Computer Science Department";
+                    avatarController.DisplayImage("iACADEMY/CrisolaTan.png");
+                }
 
                 if (!string.IsNullOrEmpty(person) && !string.IsNullOrEmpty(occupation))
                 {
@@ -103,11 +126,54 @@ namespace GooeyWpf.Commands
                         ]);
                 }
             }
-            else if (text.Contains("thats all"))
+            else if (text.Contains("when"))
+            {
+                if (text.Contains("iacademy") && text.Contains("established"))
+                {
+                    Respond(["iACADEMY was established "]);
+                }
+            }
+            else if (text.Contains("where") || text.Contains("what floor") || text.Contains("which floor"))
+            {
+                if (text.Contains("gym") || text.Contains("gymnasium"))
+                {
+                    Respond("The gymnasium can be found on the lower penthouse, or LP.");
+                }
+                else if (text.Contains("clinic") || text.Contains("medical"))
+                {
+                    Respond("You can go to the clinic located on the ground floor, to the right after entering the turnstiles.");
+                }
+                else if (text.Contains("library") || text.Contains("read book") || text.Contains("research"))
+                {
+                    Respond("You can visit the library at the upper penthouse, or UP.");
+                }
+                else if (text.Contains("iacademy"))
+                {
+                    Respond("iACADEMY");
+                }
+            }
+            else if (text.Contains("that will be all"))
             {
                 Respond("I hope my answers, though limited, were sufficient.");
                 Exit();
             }
         }
+
+        //bool MatchAndGrab(string text, string[] matches, out string remaining)
+        //{
+        //    int matchIndex = 0;
+        //    for (int i = 0; i < matches.Length; i++)
+        //    {
+        //        if ((matchIndex = text.IndexOf(matches[i], StringComparison.OrdinalIgnoreCase)) >= 0)
+        //        {
+        //            string match = matches[i];
+        //            remaining = text[matchIndex..].Replace(match, "");
+        //            return true;
+        //        }
+        //    }
+
+        //    remaining = "";
+        //    return false;
+        //}
     }
 }

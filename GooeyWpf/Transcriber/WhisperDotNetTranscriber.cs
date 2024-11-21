@@ -46,10 +46,10 @@ namespace GooeyWpf.Transcriber
         {
             //RuntimeOptions.Instance.SetUseFlashAttention(true);
 
-            LogProvider.Instance.OnLog += (l, s) =>
-            {
-                Debug.WriteLine($"[{l}] {s}");
-            };
+            //LogProvider.Instance.OnLog += (l, s) =>
+            //{
+            //    Debug.WriteLine($"[{l}] {s}");
+            //};
 
             RuntimeOptions.Instance.SetRuntimeLibraryOrder([RuntimeLibrary.Cuda]);
 

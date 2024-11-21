@@ -1,17 +1,26 @@
 ﻿using GooeyWpf.Services;
 using GooeyWpf.Synthesizer;
 using GooeyWpf.Transcriber;
+using LibVLCSharp.Shared;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using TagLib.Ape;
+using YoutubeExplode.Search;
+using YoutubeExplode.Videos.Streams;
+using static Vanara.PInvoke.ComCtl32;
 
 namespace GooeyWpf.Commands
 {
     [Command]
     internal class MusicCommand(ITranscriber transcriber, ISynthesizer synthesizer, ListBox chatLog, AvatarController avatarController) : InteractiveCommand(transcriber, synthesizer, chatLog, avatarController)
     {
+        private bool youtube = false;
+
         public override bool CommandMatch(string text)
         {
+            if (text.Contains("on youtube")) youtube = true;
+
             return text.StartsWith("play ") || text.StartsWith("stop ") ||
                 text.Contains("refresh my library") ||
                 text.Contains("update my library") ||
@@ -21,6 +30,35 @@ namespace GooeyWpf.Commands
         public override void Parse(string text)
         {
             string remaining = Common.RemovePunctuation(text[text.IndexOf(' ')..].Trim()).ToLower();
+
+            if (youtube)
+            {
+                string query = remaining.Replace("on youtube", "").Trim();
+                Task.Run(async () =>
+                {
+                    Respond($"Alright, I'll search for a video.");
+                    IAsyncEnumerable<VideoSearchResult> results = YouTubeService.Instance.Search(query);
+                    await foreach (var item in results)
+                    {
+                        Respond($"Playing {item.Title}.");
+                        (IStreamInfo a, IStreamInfo? v) youtubeStreams = await YouTubeService.Instance.GetStream(item.Url);
+                        Media media;
+                        if (youtubeStreams.v is null)
+                        {
+                            media = VlcService.Instance.GetMedia(new Uri(youtubeStreams.a.Url));
+                        }
+                        else
+                        {
+                            media = VlcService.Instance.GetMedia(new Uri(youtubeStreams.v.Url));
+                            media.AddSlave(MediaSlaveType.Audio, 4, new Uri(youtubeStreams.a.Url));
+                        }
+                        avatarController.DisplayVideo(media);
+                        break;
+                    }
+                });
+                youtube = false;
+                return;
+            }
 
             if (text.Contains("refresh my library") ||
                 text.Contains("update my library") ||
