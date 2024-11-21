@@ -6,7 +6,7 @@ Group members:
 - Jacob Tarun [@MarshmallowAndroid](https://github.com/MarshmallowAndroid)
 - Ian Alvarez [@proj-jra](https://github.com/proj-jra)
 - Marc Briones [@Pluggedaxe](https://github.com/Pluggedaxe)
-- Kyle Fabila
+- Kyle Fabila [@elykfabl](https://github.com/elykfabl)
 
 ## Building
 Open the solution, then build **GooeyWpf**.
