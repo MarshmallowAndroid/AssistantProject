@@ -93,6 +93,12 @@ namespace GooeyWpf.Services
             AudioService.Instance.Play();
         }
 
+        public void PlayMp3(Stream mp3WaveStream)
+        {
+            AudioService.Instance.Initialize(new Mp3FileReader(mp3WaveStream));
+            AudioService.Instance.Play();
+        }
+
         public void Stop()
         {
             AudioService.Instance.Stop();

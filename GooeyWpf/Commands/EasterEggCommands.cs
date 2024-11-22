@@ -1,10 +1,12 @@
-﻿using GooeyWpf.Synthesizer;
+﻿using GooeyWpf.Services;
+using GooeyWpf.Synthesizer;
 using GooeyWpf.Transcriber;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GooeyWpf.Commands
@@ -56,12 +58,12 @@ namespace GooeyWpf.Commands
 
         public override bool CommandMatch(string text)
         {
-            return text.Contains("oops i did it again");
+            return Common.RemovePunctuation(text).Contains("oops i did it again");
         }
 
         public override void Parse(string text)
         {
-            
+            MusicService.Instance.PlayMp3(Application.GetResourceStream(Common.Resource("/Sounds/BritneyOops.mp3")).Stream);
         }
     }
 }

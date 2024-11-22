@@ -18,6 +18,9 @@ namespace GooeyWpf
 {
     internal class AvatarController : IDisposable
     {
+        private const int defaultWidth = 132;
+        private const int defaultHeight = 132;
+
         private readonly Avatar avatarControl;
         private readonly Assistant assistant;
 
@@ -112,6 +115,8 @@ namespace GooeyWpf
             {
                 avatarControl.ImageVisibility = Visibility.Visible;
                 avatarControl.Image = new BitmapImage(Common.Resource($"/Images/{path}"));
+                float ratio = (float)((float)avatarControl.Image.Height / avatarControl.Image.Width);
+                avatarControl.Height = (int)(defaultHeight * ratio);
             });
             imageTimer.Change(duration, Timeout.Infinite);
         }
@@ -126,11 +131,24 @@ namespace GooeyWpf
                 avatarControl.VideoVisibility = Visibility.Visible;
                 avatarControl.VideoMediaPlayer = mediaPlayer;
                 avatarControl.VideoMediaPlayer.Play();
-                avatarControl.VideoMediaPlayer.Stopped += (s, e) =>
+                uint videoWidth = 0;
+                uint videoHeight = 0;
+                if (mediaPlayer.Size(0, ref videoWidth, ref videoHeight))
                 {
-                    avatarControl.VideoMediaPlayer.Media.Dispose();
+                    avatarControl.Width *= 2;
+                    float ratio = (float)((float)avatarControl.Image.Height / avatarControl.Image.Width);
+                    avatarControl.Height = (int)(defaultHeight * 2 * ratio);
+                }
+                void stoppedEventHandler(object? s, EventArgs e)
+                {
+                    media.Dispose();
                     avatarControl.VideoMediaPlayer.Media = null;
-                };
+                    avatarControl.VideoMediaPlayer.Stopped -= stoppedEventHandler;
+
+                    avatarControl.Width = defaultWidth;
+                    avatarControl.Height = defaultHeight;
+                }
+                avatarControl.VideoMediaPlayer.Stopped += stoppedEventHandler;
             });
         }
 
@@ -140,6 +158,7 @@ namespace GooeyWpf
             avatarControl.Dispatcher.Invoke(() =>
             {
                 avatarControl.ImageVisibility = Visibility.Hidden;
+                avatarControl.Height = defaultHeight;
             });
         }
 

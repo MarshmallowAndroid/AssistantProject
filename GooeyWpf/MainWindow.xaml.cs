@@ -31,10 +31,6 @@ namespace GooeyWpf
             Assistant.Instance.VoiceActivityDone += Instance_VoiceActivityDone;
 
             Assistant.Instance.BindCommands(listBoxChatLog, avatarController);
-
-            //listBoxChatLog.Items.Add(new ChatLog(ChatLog.ChatSpeaker.Program, "kdsjhfshfhishiidfiuhiushdifhihdsihfkdjhfkjshfhsfjhsgffsgghfg" +
-            //    "cvbjflkjsbfjbjsgblfjgbjdbfgkfngnjfnxgkjbkxjfgnbjdkfjgnknlkjgnfkjghzjkgkjzdhfgkjzdnhgndjg" +
-            //    "lkgnkjfdnhgnjdnjhnjkgdhnjkdnkjhgnkjdkgjhnk"));
         }
 
         private void Instance_VoiceActivityDone(object? sender, EventArgs e)
@@ -66,21 +62,6 @@ namespace GooeyWpf
             Dispatcher.Invoke(() =>
             {
                 checkBoxListening.IsChecked = true;
-            });
-        }
-
-        private void Instance_LipSync(bool mouthOpen)
-        {
-            avatar.Dispatcher.Invoke(() =>
-            {
-                if (mouthOpen)
-                {
-                    avatar.FaceImage = new BitmapImage(new Uri("/Images/NormalOpen.png", UriKind.Relative));
-                }
-                else
-                {
-                    avatar.FaceImage = new BitmapImage(new Uri("/Images/NormalClosed.png", UriKind.Relative));
-                }
             });
         }
 
@@ -131,6 +112,7 @@ namespace GooeyWpf
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            textBoxChat.Focus();
             MusicService.Instance.Play(Application.GetResourceStream(new Uri("/Sounds/Boot.wav", UriKind.Relative)).Stream);
         }
     }

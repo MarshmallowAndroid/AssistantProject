@@ -21,7 +21,7 @@ namespace GooeyWpf
 
         private readonly WasapiOut outputDevice = new();
         private readonly ISynthesizer synthesizer;
-        private readonly WhisperDotNetTranscriber transcriber;
+        private readonly ITranscriber transcriber;
         private readonly CommandManager commandManager;
 
         private DirectCommand? directCommand;
@@ -35,6 +35,8 @@ namespace GooeyWpf
                 @"Piper\piper.exe",
                 piperVoices[0],
                 3, 1.05f);
+
+
             RawSourceWaveStream rawSourceWaveStream = new(synthesizer.OutputStream, new WaveFormat(22050, 1));
             LipsyncSampleProvider sampleProvider = new(rawSourceWaveStream.ToSampleProvider());
             sampleProvider.Lipsync += SampleProvider_Lipsync;

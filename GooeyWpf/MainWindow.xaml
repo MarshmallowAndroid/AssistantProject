@@ -57,9 +57,9 @@
         <StackPanel Grid.Column="1" Margin="0,12,12,0" VerticalAlignment="Top">
             <controls:Avatar x:Name="avatar" Grid.Column="1" Height="132" Width="132"
                          FaceImage="/Images/Avatar/NormalClosed.png" EyeImage="/Images/Avatar/EyeOpen.png" VerticalAlignment="Top" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" />
-            <CheckBox x:Name="checkBoxListening" Style="{StaticResource LightCheckBoxStyle}" Content="Listening" IsChecked="False" Focusable="False" IsEnabled="False"
+            <CheckBox x:Name="checkBoxListening" Style="{StaticResource LightCheckBoxStyle}" Content="Waiting for command" IsChecked="False" Focusable="False" IsEnabled="False"
                       Margin="0,12,0,6"/>
-            <CheckBox x:Name="checkBoxVoiceActivity" Style="{StaticResource LightCheckBoxStyle}" Content="Voice detected" IsChecked="False" Focusable="False" IsEnabled="False"/>
+            <CheckBox x:Name="checkBoxVoiceActivity" Style="{StaticResource LightCheckBoxStyle}" Content="Processing" IsChecked="False" Focusable="False" IsEnabled="False"/>
         </StackPanel>
     </Grid>
 </windows98:Windows98Window>

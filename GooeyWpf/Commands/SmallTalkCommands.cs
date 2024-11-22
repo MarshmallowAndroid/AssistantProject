@@ -205,4 +205,20 @@ namespace GooeyWpf.Commands
             ]);
         }
     }
+
+    //internal class PiperRebootCommand : InteractiveCommand
+    //{
+    //    public PiperRebootCommand(ITranscriber transcriber, ISynthesizer synthesizer, ListBox chatLog, AvatarController avatarController) : base(transcriber, synthesizer, chatLog, avatarController)
+    //    {
+    //    }
+
+    //    public override bool CommandMatch(string text)
+    //    {
+    //        text.Contains("i can't hear you anymore");
+    //    }
+
+    //    public override void Parse(string text)
+    //    {
+    //    }
+    //}
 }

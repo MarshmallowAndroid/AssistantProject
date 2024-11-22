@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\Icon.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +29,7 @@
     <None Remove="Images\Avatar\NormalClosed.png" />
     <None Remove="Images\Avatar\NormalOpen.png" />
     <None Remove="Images\iACADEMY\BennettTanyag.png" />
+    <None Remove="Images\iAcademy\CarlSo.jpg" />
     <None Remove="Images\iACADEMY\CrisolaTan.jpg" />
     <None Remove="Images\iACADEMY\FranciscoNapalit.png" />
     <None Remove="Images\iACADEMY\JohnPadua.png" />
@@ -37,10 +40,19 @@
     <None Remove="Images\LightOff.png" />
     <None Remove="Images\LightOn.png" />
     <None Remove="Sounds\Boot.wav" />
+    <None Remove="Sounds\BritneyOops.mp3" />
+    <None Remove="Sounds\Chord.WAV" />
+    <None Remove="Sounds\Logoff.WAV" />
+    <None Remove="Sounds\Tada.WAV" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="LibVLCSharp.WPF" Version="3.9.1" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
     <PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.0.4" />
@@ -76,6 +88,7 @@
     <Resource Include="Images\Avatar\NormalOpen.png" />
     <Resource Include="Images\Avatar\NormalClosed.png" />
     <Resource Include="Images\iACADEMY\BennettTanyag.png" />
+    <Resource Include="Images\iAcademy\CarlSo.jpg" />
     <Resource Include="Images\iACADEMY\CrisolaTan.jpg" />
     <Resource Include="Images\iACADEMY\FranciscoNapalit.png" />
     <Resource Include="Images\iACADEMY\JohnPadua.png" />
@@ -86,6 +99,10 @@
     <Resource Include="Images\LightOff.png" />
     <Resource Include="Images\LightOn.png" />
 	<Resource Include="Sounds\Boot.wav" />
+	<Resource Include="Sounds\BritneyOops.mp3" />
+	<Resource Include="Sounds\Chord.WAV" />
+	<Resource Include="Sounds\Logoff.WAV" />
+	<Resource Include="Sounds\Tada.WAV" />
   </ItemGroup>
 
 </Project>

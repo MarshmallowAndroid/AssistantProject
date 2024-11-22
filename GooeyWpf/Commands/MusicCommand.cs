@@ -37,23 +37,34 @@ namespace GooeyWpf.Commands
                 Task.Run(async () =>
                 {
                     Respond($"Alright, I'll search for a video.");
-                    IAsyncEnumerable<VideoSearchResult> results = YouTubeService.Instance.Search(query);
-                    await foreach (var item in results)
+                    IEnumerable<VideoSearchResult> results = YouTubeService.Instance.Search(query).ToBlockingEnumerable();
+                    if (results.Any())
                     {
-                        Respond($"Playing {item.Title}.");
-                        (IStreamInfo a, IStreamInfo? v) youtubeStreams = await YouTubeService.Instance.GetStream(item.Url);
-                        Media media;
-                        if (youtubeStreams.v is null)
+                        VideoSearchResult result = results.First();
+                        await Task.Delay(5000);
+                        try
                         {
-                            media = VlcService.Instance.GetMedia(new Uri(youtubeStreams.a.Url));
+                            (IStreamInfo a, IStreamInfo? v) = await YouTubeService.Instance.GetStream(result.Id);
+                            Media media;
+                            if (v is null)
+                            {
+                                media = VlcService.Instance.GetMedia(new Uri(a.Url));
+                            }
+                            else
+                            {
+                                media = VlcService.Instance.GetMedia(new Uri(v.Url));
+                                media.AddSlave(MediaSlaveType.Audio, 4, new Uri(a.Url));
+                            }
+                            avatarController.DisplayVideo(media);
                         }
-                        else
+                        catch (Exception e)
                         {
-                            media = VlcService.Instance.GetMedia(new Uri(youtubeStreams.v.Url));
-                            media.AddSlave(MediaSlaveType.Audio, 4, new Uri(youtubeStreams.a.Url));
+                            Respond($"I could not play {result.Title}. We may have been blocked by YouTube.");
+                            Respond($"Here is the error message, please call my developers to take a look:");
+                            Respond($"{e.Message}", "");
+                            return;
                         }
-                        avatarController.DisplayVideo(media);
-                        break;
+                        Respond($"Playing {result.Title}.");
                     }
                 });
                 youtube = false;

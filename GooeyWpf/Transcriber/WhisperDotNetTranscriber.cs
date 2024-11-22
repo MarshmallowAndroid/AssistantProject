@@ -126,6 +126,16 @@ namespace GooeyWpf.Transcriber
 
         private void OnSegment(SegmentData e)
         {
+            if (e.Language != "en")
+            {
+                if ((e.Text.Contains("thank", StringComparison.InvariantCultureIgnoreCase) && 
+                    e.Text.Contains("watching", StringComparison.InvariantCultureIgnoreCase)) || 
+                    e.Text.Contains("subscribe", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return;
+                }
+            }
+
             Transcribe?.Invoke(this,
                 new ITranscriber.TranscribeEventArgs(e.Text.Trim(), e.Probability, e.Language));
         }
