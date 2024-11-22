@@ -155,7 +155,7 @@ namespace GooeyWpf
         {
             avatarControl.Dispatcher.Invoke(() =>
             {
-                if (!avatarControl.VideoMediaPlayer.IsPlaying) return;
+                if (avatarControl.VideoMediaPlayer is null) return;
 
                 avatarControl.VideoVisibility = Visibility.Hidden;
                 avatarControl.VideoMediaPlayer.Stop();
