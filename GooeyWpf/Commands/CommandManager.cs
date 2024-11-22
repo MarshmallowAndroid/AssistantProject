@@ -90,8 +90,11 @@ namespace GooeyWpf.Commands
 
             text.Replace("eye academy", "iacademy")
                 .Replace("hi academy", "iacademy")
+                .Replace("i academy", "iacademy")
                 .Replace("high academy", "iacademy")
                 .Replace("the academy", "iacademy")
+                .Replace("that academy", "iacademy")
+                .Replace("ai academy", "iacademy")
                 .Replace("my academy", "iacademy");
 
             //foreach (var variation in variations)
