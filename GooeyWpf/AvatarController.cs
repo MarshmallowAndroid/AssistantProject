@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using static Vanara.PInvoke.Ole32.PROPERTYKEY.System;
 
 namespace GooeyWpf
 {
@@ -131,24 +132,32 @@ namespace GooeyWpf
                 avatarControl.VideoVisibility = Visibility.Visible;
                 avatarControl.VideoMediaPlayer = mediaPlayer;
                 avatarControl.VideoMediaPlayer.Play();
-                uint videoWidth = 0;
-                uint videoHeight = 0;
-                if (mediaPlayer.Size(0, ref videoWidth, ref videoHeight))
-                {
-                    avatarControl.Width *= 2;
-                    float ratio = (float)((float)avatarControl.Image.Height / avatarControl.Image.Width);
-                    avatarControl.Height = (int)(defaultHeight * 2 * ratio);
-                }
+                avatarControl.Width *= 2;
+                avatarControl.Height *= 2;
                 void stoppedEventHandler(object? s, EventArgs e)
                 {
                     media.Dispose();
-                    avatarControl.VideoMediaPlayer.Media = null;
-                    avatarControl.VideoMediaPlayer.Stopped -= stoppedEventHandler;
+                    avatarControl.Dispatcher.Invoke(() =>
+                    {
+                        avatarControl.VideoMediaPlayer.Media = null;
+                        avatarControl.VideoMediaPlayer.Stopped -= stoppedEventHandler;
 
-                    avatarControl.Width = defaultWidth;
-                    avatarControl.Height = defaultHeight;
+                        avatarControl.Width = defaultWidth;
+                        avatarControl.Height = defaultHeight;
+                    });
                 }
                 avatarControl.VideoMediaPlayer.Stopped += stoppedEventHandler;
+            });
+        }
+
+        public void StopVideo()
+        {
+            avatarControl.Dispatcher.Invoke(() =>
+            {
+                avatarControl.VideoVisibility = Visibility.Hidden;
+                avatarControl.VideoMediaPlayer.Stop();
+                avatarControl.VideoMediaPlayer.Media?.Dispose();
+                avatarControl.VideoMediaPlayer.Media = null;
             });
         }
 
