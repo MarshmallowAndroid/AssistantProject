@@ -136,9 +136,10 @@ namespace GooeyWpf
                 avatarControl.Height *= 2;
                 void stoppedEventHandler(object? s, EventArgs e)
                 {
-                    media.Dispose();
                     avatarControl.Dispatcher.Invoke(() =>
                     {
+                        avatarControl.Visibility = Visibility.Hidden;
+                        avatarControl.VideoMediaPlayer.Media?.Dispose();
                         avatarControl.VideoMediaPlayer.Media = null;
                         avatarControl.VideoMediaPlayer.Stopped -= stoppedEventHandler;
 

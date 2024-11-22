@@ -199,6 +199,7 @@ namespace GooeyWpf.Commands
         public override void Parse(string text)
         {
             MusicService.Instance.Stop();
+            avatarController.StopVideo();
             Respond(
             [
                 "Alright. Stopping music.", "Sure."

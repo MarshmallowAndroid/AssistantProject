@@ -86,6 +86,7 @@ namespace GooeyWpf.Commands
             if (text.StartsWith("stop"))
             {
                 MusicService.Instance.Stop();
+                avatarController.StopVideo();
                 Respond(
                 [
                     "Alright. Stopping music.",
