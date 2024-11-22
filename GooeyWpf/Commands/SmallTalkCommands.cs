@@ -206,6 +206,28 @@ namespace GooeyWpf.Commands
         }
     }
 
+    [SmallTalkCommand]
+    class HelloCommand : InteractiveCommand
+    {
+        public HelloCommand(ITranscriber transcriber, ISynthesizer synthesizer, ListBox chatLog, AvatarController avatarController) : base(transcriber, synthesizer, chatLog, avatarController)
+        {
+        }
+
+        public override bool CommandMatch(string text)
+        {
+            return text.Contains("hello");
+        }
+
+        public override void Parse(string text)
+        {
+            Respond(
+                [
+                "Hello!",
+                "Hello there.",
+                ]);
+        }
+    }
+
     //internal class PiperRebootCommand : InteractiveCommand
     //{
     //    public PiperRebootCommand(ITranscriber transcriber, ISynthesizer synthesizer, ListBox chatLog, AvatarController avatarController) : base(transcriber, synthesizer, chatLog, avatarController)
