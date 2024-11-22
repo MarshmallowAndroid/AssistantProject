@@ -229,6 +229,24 @@ namespace GooeyWpf.Commands
         }
     }
 
+    [SmallTalkCommand]
+    class WoodChuck : InteractiveCommand
+    {
+        public WoodChuck(ITranscriber transcriber, ISynthesizer synthesizer, ListBox chatLog, AvatarController avatarController) : base(transcriber, synthesizer, chatLog, avatarController)
+        {
+        }
+
+        public override bool CommandMatch(string text)
+        {
+            return text.Contains("how much wood would a woodchuck chuck if a woodchuck could chuck wood");
+        }
+
+        public override void Parse(string text)
+        {
+            Respond("He would chuck, he would, as much as he could, and chuck as much wood as a woodchuck would if a woodchuck could chuck wood.");
+        }
+    }
+
     //internal class PiperRebootCommand : InteractiveCommand
     //{
     //    public PiperRebootCommand(ITranscriber transcriber, ISynthesizer synthesizer, ListBox chatLog, AvatarController avatarController) : base(transcriber, synthesizer, chatLog, avatarController)
