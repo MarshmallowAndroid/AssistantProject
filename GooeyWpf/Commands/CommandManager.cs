@@ -88,6 +88,11 @@ namespace GooeyWpf.Commands
         {
             string text = eventArgs.Text.ToLower();
 
+            text.Replace("eye academy", "iacademy")
+                .Replace("hi academy", "iacademy")
+                .Replace("high academy", "iacademy")
+                .Replace("my academy", "iacademy");
+
             //foreach (var variation in variations)
             //{
             //    if (Common.RemovePunctuation(text).Contains(variation, StringComparison.CurrentCultureIgnoreCase))
@@ -127,7 +132,8 @@ namespace GooeyWpf.Commands
                     remaining = text;
                 }
 
-                ProcessCommand(remaining, commands);
+                if (!ProcessCommand(remaining, commands))
+                    ProcessCommand(remaining, smalltalkCommands);
             }
             else
             {
@@ -135,7 +141,7 @@ namespace GooeyWpf.Commands
             }
         }
 
-        private void ProcessCommand(string commandString, IEnumerable<Command> commands)
+        private bool ProcessCommand(string commandString, IEnumerable<Command> commands)
         {
             foreach (var command in commands)
             {
@@ -145,9 +151,10 @@ namespace GooeyWpf.Commands
                     listening = false;
                     wakeResponded = false;
                     Sleep?.Invoke(this, EventArgs.Empty);
-                    break;
+                    return true;
                 }
             }
+            return false;
         }
     }
 }
