@@ -238,7 +238,8 @@ namespace GooeyWpf.Commands
 
         public override bool CommandMatch(string text)
         {
-            return text.Contains("how much wood would a woodchuck chuck if a woodchuck could chuck wood");
+            return text.Contains("how much wood would a woodchuck chuck if a woodchuck could chuck wood") ||
+                text.Contains("how much wood would a wood chuck chuck if a wood chuck could chuck wood");
         }
 
         public override void Parse(string text)
