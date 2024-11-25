@@ -6,6 +6,6 @@ namespace GooeyWpf.Synthesizer
     {
         void Synthesize(string text);
 
-        Stream OutputStream { get; }
+        event EventHandler<bool>? LipSync;
     }
 }

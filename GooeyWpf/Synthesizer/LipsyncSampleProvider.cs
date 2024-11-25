@@ -24,17 +24,15 @@ namespace GooeyWpf
             }
             sum /= count;
             if (sum > Threshold)
-                Lipsync?.Invoke(true);
+                LipSync?.Invoke(this, true);
             else
-                Lipsync?.Invoke(false);
+                LipSync?.Invoke(this, false);
             int read = source.Read(buffer, offset, count);
             if (read < count)
-                Lipsync?.Invoke(false);
+                LipSync?.Invoke(this, false);
             return read;
         }
 
-        public delegate void OnLipsync(bool mouthOpen);
-
-        public event OnLipsync? Lipsync;
+        public event EventHandler<bool>? LipSync;
     }
 }

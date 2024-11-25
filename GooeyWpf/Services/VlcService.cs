@@ -16,7 +16,7 @@ namespace GooeyWpf.Services
             libVlc = new LibVLC();
         }
 
-        public MediaPlayer GetMediaPlayer()
+        public MediaPlayer CreateMediaPlayer()
         {
             return new MediaPlayer(libVlc);
         }

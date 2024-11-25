@@ -34,17 +34,24 @@ namespace GooeyWpf.Commands
             if (youtube)
             {
                 string query = remaining.Replace("on youtube", "").Trim();
-                Task.Run(async () =>
+                {
+                    using Media media = VlcService.Instance.GetMedia(new Uri(@"C:\Users\jacob\Videos\RDT_20231216_203336.mp4"));
+                    //media.AddSlave(MediaSlaveType.Audio, 4, new Uri(@"C:\Users\jacob\Desktop\takeonme_audio.webm"));
+                    avatarController.DisplayVideo(media);
+                }
+                youtube = false;
+                return;
+                Task.Run(() =>
                 {
                     Respond($"Alright, I'll search for a video.");
                     IEnumerable<VideoSearchResult> results = YouTubeService.Instance.Search(query).ToBlockingEnumerable();
                     if (results.Any())
                     {
                         VideoSearchResult result = results.First();
-                        await Task.Delay(5000);
+                        Task.Delay(5000);
                         try
                         {
-                            (IStreamInfo a, IStreamInfo? v) = await YouTubeService.Instance.GetStream(result.Id);
+                            (IStreamInfo a, IStreamInfo? v) = YouTubeService.Instance.GetStream(result.Id);
                             Media media;
                             if (v is null)
                             {

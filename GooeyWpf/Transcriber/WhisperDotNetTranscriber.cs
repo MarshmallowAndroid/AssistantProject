@@ -46,12 +46,12 @@ namespace GooeyWpf.Transcriber
         {
             //RuntimeOptions.Instance.SetUseFlashAttention(true);
 
-            //LogProvider.Instance.OnLog += (l, s) =>
-            //{
-            //    Debug.WriteLine($"[{l}] {s}");
-            //};
+            LogProvider.Instance.OnLog += (l, s) =>
+            {
+                Debug.WriteLine($"[{l}] {s}");
+            };
 
-            RuntimeOptions.Instance.SetRuntimeLibraryOrder([RuntimeLibrary.Cuda]);
+            RuntimeOptions.Instance.SetRuntimeLibraryOrder([RuntimeLibrary.Vulkan]);
 
             WhisperFactory whisper = WhisperFactory.FromPath(model);
             processor = whisper.CreateBuilder()

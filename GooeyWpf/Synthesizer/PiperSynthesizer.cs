@@ -1,12 +1,16 @@
-﻿using System.Diagnostics;
+﻿using NAudio.Wave;
+using System.Diagnostics;
 using System.IO;
 
 namespace GooeyWpf.Synthesizer
 {
     public class PiperSynthesizer : ISynthesizer
     {
+        private readonly WasapiOut outputDevice = new();
         private readonly ProcessStartInfo processStartInfo;
         private Process? piperProcess;
+
+        public event EventHandler<bool>? LipSync;
 
         public PiperSynthesizer(string piperExecutable, string model, int speaker, float length)
         {
@@ -20,24 +24,35 @@ namespace GooeyWpf.Synthesizer
                 CreateNoWindow = true
             };
 
-            OutputStream = Initialize();
+            Initialize();
         }
-
-        public Stream OutputStream { get; private set; }
 
         private Stream Initialize()
         {
             piperProcess = Process.Start(processStartInfo)!;
             if (piperProcess is null)
                 throw new Exception("Unable to start Piper process.");
+
+            RawSourceWaveStream rawSourceWaveStream = new(piperProcess.StandardOutput.BaseStream, new WaveFormat(22050, 1));
+            LipsyncSampleProvider sampleProvider = new(rawSourceWaveStream.ToSampleProvider());
+            sampleProvider.LipSync += SampleProvider_LipSync;
+
+            outputDevice.Init(sampleProvider);
+            outputDevice.Play();
+
             return piperProcess.StandardOutput.BaseStream;
+        }
+
+        private void SampleProvider_LipSync(object? sender, bool e)
+        {
+            LipSync?.Invoke(sender, e);
         }
 
         public void Synthesize(string text)
         {
-            if (piperProcess is null)
+            if (piperProcess?.HasExited ?? true)
             {
-                OutputStream = Initialize();
+                Initialize();
             }
 
             piperProcess?.StandardInput.WriteLine(text);

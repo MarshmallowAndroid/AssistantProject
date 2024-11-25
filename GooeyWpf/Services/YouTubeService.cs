@@ -19,15 +19,16 @@ namespace GooeyWpf.Services
             youtubeClient = new(HttpClientService.Instance.Client);
         }
 
-        public async Task<(IStreamInfo audio, IStreamInfo? video)> GetStream(string videoId)
+        public (IStreamInfo audio, IStreamInfo? video) GetStream(string videoId)
         {
             StreamClient streamClient = youtubeClient.Videos.Streams;
-            StreamManifest streamManifest = await streamClient.GetManifestAsync(new VideoId(videoId));
+            StreamManifest streamManifest = streamClient.GetManifestAsync(new VideoId(videoId)).Result;
 
             IEnumerable<VideoOnlyStreamInfo> videos = streamManifest.GetVideoOnlyStreams();
 
             return (streamManifest.GetAudioOnlyStreams().GetWithHighestBitrate(),
-                streamManifest.GetVideoOnlyStreams().FirstOrDefault());
+                streamManifest.GetVideoOnlyStreams().FirstOrDefault(
+                    v => v.VideoQuality.MaxHeight <= 480, streamManifest.GetVideoOnlyStreams().First()));
         }
 
         public IAsyncEnumerable<VideoSearchResult> Search(string query)

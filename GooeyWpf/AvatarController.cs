@@ -67,6 +67,9 @@ namespace GooeyWpf
             imageTimer = new(ImageTimer_Callback, null, Timeout.Infinite, Timeout.Infinite);
 
             assistant.LipSync += LipSync;
+
+            avatarControl.VideoMediaPlayer = VlcService.Instance.CreateMediaPlayer();
+            avatarControl.VideoMediaPlayer.Stopped += VideoEnded;
         }
 
         public void BarrelRoll()
@@ -124,30 +127,57 @@ namespace GooeyWpf
 
         public void DisplayVideo(LibVLCSharp.Shared.Media media)
         {
-            LibVLCSharp.Shared.MediaPlayer mediaPlayer = VlcService.Instance.GetMediaPlayer();
-            mediaPlayer.Media = media;
-
             avatarControl.Dispatcher.Invoke(() =>
             {
                 avatarControl.VideoVisibility = Visibility.Visible;
-                avatarControl.VideoMediaPlayer = mediaPlayer;
-                avatarControl.VideoMediaPlayer.Play();
-                avatarControl.Width *= 2;
-                avatarControl.Height *= 2;
-                void stoppedEventHandler(object? s, EventArgs e)
-                {
-                    avatarControl.Dispatcher.Invoke(() =>
-                    {
-                        avatarControl.VideoVisibility = Visibility.Hidden;
-                        avatarControl.VideoMediaPlayer.Media?.Dispose();
-                        avatarControl.VideoMediaPlayer.Media = null;
-                        avatarControl.VideoMediaPlayer.Stopped -= stoppedEventHandler;
 
-                        avatarControl.Width = defaultWidth;
-                        avatarControl.Height = defaultHeight;
-                    });
+                avatarControl.VideoMediaPlayer.Media = media;
+                avatarControl.VideoMediaPlayer.Play();
+
+                //avatarControl.Width *= 2;
+                //avatarControl.Height *= 2;
+                AnimateSize(true);
+
+            });
+        }
+
+        void VideoEnded(object? sender, EventArgs e)
+        {
+            avatarControl.Dispatcher.Invoke(() =>
+            {
+                avatarControl.VideoVisibility = Visibility.Hidden;
+                avatarControl.VideoMediaPlayer.Media?.Dispose();
+                //avatarControl.VideoMediaPlayer.Media = null;
+
+                //avatarControl.Width = defaultWidth;
+                //avatarControl.Height = defaultHeight;
+                AnimateSize(false);
+            });
+        }
+
+        public void AnimateSize(bool enlarge)
+        {
+            avatarControl.Dispatcher.Invoke(() =>
+            {
+                ScaleTransform scaleTransform = new();
+                DoubleAnimation barrelRoll = new();
+
+                if (enlarge)
+                {
+                    barrelRoll.From = 1;
+                    barrelRoll.To = 2;
                 }
-                avatarControl.VideoMediaPlayer.Stopped += stoppedEventHandler;
+                else
+                {
+                    barrelRoll.From = 2;
+                    barrelRoll.To = 1;
+                }
+
+                barrelRoll.Duration = new Duration(TimeSpan.FromSeconds(1));
+                barrelRoll.EasingFunction = new CubicEase();
+                avatarControl.LayoutTransform = scaleTransform;
+                scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, barrelRoll);
+                scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, barrelRoll);
             });
         }
 
@@ -155,12 +185,16 @@ namespace GooeyWpf
         {
             avatarControl.Dispatcher.Invoke(() =>
             {
-                if (avatarControl.VideoMediaPlayer is null) return;
+                if (avatarControl.VideoMediaPlayer is null || !avatarControl.VideoMediaPlayer.IsPlaying) return;
 
                 avatarControl.VideoVisibility = Visibility.Hidden;
+
                 avatarControl.VideoMediaPlayer.Stop();
                 avatarControl.VideoMediaPlayer.Media?.Dispose();
-                avatarControl.VideoMediaPlayer.Media = null;
+                //avatarControl.VideoMediaPlayer.Media = null;
+
+                avatarControl.Width = defaultWidth;
+                avatarControl.Height = defaultHeight;
             });
         }
 
@@ -174,7 +208,7 @@ namespace GooeyWpf
             });
         }
 
-        private void LipSync(bool mouthOpen)
+        private void LipSync(object? sender, bool mouthOpen)
         {
             avatarControl.Dispatcher.Invoke(() =>
             {

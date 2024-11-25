@@ -15,7 +15,7 @@ namespace GooeyWpf
         public string SpeakerName => Speaker switch
         {
             ChatSpeaker.Program => Assistant.AssistantName + ": ",
-            ChatSpeaker.User => $"You {(Language != "en" ? $"({CultureInfo.GetCultureInfo(Language).DisplayName})" : "")}: ",
+            ChatSpeaker.User => $"You{(Language != "en" ? $" ({CultureInfo.GetCultureInfo(Language).DisplayName})" : "")}: ",
             _ => "Unknown: "
         };
 

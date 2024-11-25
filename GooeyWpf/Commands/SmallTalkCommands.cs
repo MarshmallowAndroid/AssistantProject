@@ -178,13 +178,14 @@ namespace GooeyWpf.Commands
         public override void Parse(string text)
         {
             Respond(
-                ["I was made in iACADEMY. My creators are J2JK; Jilliana, Jacob, Marc, and Kyle. They are students taking up Bachelors in Computer Science, with Specialization in Software Engineering. " +
+                ["I was made in iACADEMY. My creators are J2MK; Jilliana, Jacob, Marc, and Kyle. They are students taking up Bachelors in Computer Science, with Specialization in Software Engineering. " +
                 "I am their project for their Introduction to Artificial Intelligence class under Sir Bennett Tanyag."],
-                ["I was made in eye-academy. My creators are J2JK; Jilliana, Jacob, Marc, and Kyle. They are students taking up Bachelors in Computer Science, with Specialization in Software Engineering. " +
+                ["I was made in eye-academy. My creators are J2MK; Jilliana, Jacob, Marc, and Kyle. They are students taking up Bachelors in Computer Science, with Specialization in Software Engineering. " +
                 "I am their project for their Introduction to Artificial Intelligence class under Sir Bennett Tanyag."]);
         }
     }
 
+    [SmallTalkCommand]
     internal class StopMusicCommand : InteractiveCommand
     {
         public StopMusicCommand(ITranscriber transcriber, ISynthesizer synthesizer, ListBox chatLog, AvatarController avatarController) : base(transcriber, synthesizer, chatLog, avatarController)

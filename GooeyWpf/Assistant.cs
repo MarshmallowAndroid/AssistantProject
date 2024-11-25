@@ -19,7 +19,6 @@ namespace GooeyWpf
             "Britney", "Brittany", "Brittney", "Britany", "Brit Knee"
         ];
 
-        private readonly WasapiOut outputDevice = new();
         private readonly ISynthesizer synthesizer;
         private readonly ITranscriber transcriber;
         private readonly CommandManager commandManager;
@@ -35,13 +34,8 @@ namespace GooeyWpf
                 @"Piper\piper.exe",
                 piperVoices[0],
                 3, 1.05f);
+            synthesizer.LipSync += Synthesizer_LipSync;
 
-
-            RawSourceWaveStream rawSourceWaveStream = new(synthesizer.OutputStream, new WaveFormat(22050, 1));
-            LipsyncSampleProvider sampleProvider = new(rawSourceWaveStream.ToSampleProvider());
-            sampleProvider.Lipsync += SampleProvider_Lipsync;
-            outputDevice.Init(sampleProvider);
-            outputDevice.Play();
             MMDeviceEnumerator deviceEnumerator = new();
             WasapiCapture captureDevice = new(deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Capture, Role.Multimedia), true)
             {
@@ -57,6 +51,11 @@ namespace GooeyWpf
             transcriber.VoiceActivityDone += Assistant_VoiceActivityDone;
         }
 
+        private void Synthesizer_LipSync(object? sender, bool e)
+        {
+            LipSync?.Invoke(sender, e);
+        }
+
         private void Assistant_VoiceActivityDone(object? sender, EventArgs e)
         {
             VoiceActivityDone?.Invoke(sender, e);
@@ -67,18 +66,11 @@ namespace GooeyWpf
             VoiceActivity?.Invoke(sender, e);
         }
 
-        public delegate void OnLipSync(bool mouthOpen);
-
-        public event OnLipSync? LipSync;
-
         public event EventHandler? VoiceActivity;
 
         public event EventHandler? VoiceActivityDone;
 
-        private void SampleProvider_Lipsync(bool mouthOpen)
-        {
-            LipSync?.Invoke(mouthOpen);
-        }
+        public event EventHandler<bool>? LipSync;
 
         private void CommandManager_Wake(object? sender, EventArgs e)
         {
