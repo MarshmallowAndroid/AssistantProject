@@ -1,6 +1,6 @@
 # Britney
 
-Voice assistant project for our Software Engineering course in Introduction to AI subject taught by Sir Bennett Tanyag.
+Voice assistant project for our Software Engineering course in the Introduction to AI subject taught by Sir Bennett Tanyag.
 
 Group members:
 - Jacob Tarun [@MarshmallowAndroid](https://github.com/MarshmallowAndroid)
@@ -14,11 +14,11 @@ Open the solution, then build **GooeyWpf**.
 ## Running
 
 This project makes use of the NVIDIA CUDA Toolkit for acceleration. Download it [here](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64) for your version of Windows.
-Otherwise, CPU fallback will be used which not ideal.
+Otherwise, CPU fallback will be used which is not ideal.
 
 ### Whisper dependencies
 Download a model of your choice [here](https://huggingface.co/ggerganov/whisper.cpp/tree/main).
-Models with `en` supports only English. Otherwise, the model has translation support.
+Models with `en` will support only English. Otherwise, the model has translation support.
 
 This project was tested on `ggml-medium-q8_0`.
 
